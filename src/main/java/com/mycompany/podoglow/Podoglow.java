@@ -1,67 +1,110 @@
 package com.mycompany.podoglow;
-    import javax.swing.JOptionPane;
+import javax.swing.JOptionPane;
 public class Podoglow {
+
     public static void main(String[] args) {
-        // 1. Catálogo de servicios y precios (Solución a la desinformación)
-        String[] servicios = {
-            "Podología", 
-            "Manicura tradicional", 
-            "Manicura gel", 
-            "Tratamiento de Hongos", 
-            "Pedicura"
-        };
-        double[] precios = {70.0, 20.0, 40.0, 100.0, 50.0};
+        final double POD = 70.00, MANICURAT = 20.00, MANICURAG = 40.00, TRAT = 100.00, PEDI = 50.00;
+        String pregunta;
         
-        double totalVenta = 0;
-        int opcion = 0;
+        do{
+            double ventaTotal = 0.0, subtotal;
+            int opc, cantServ = 0;
+        
+            JOptionPane.showMessageDialog(null, "Bienvenido al Sistema de Gestión PodoGlow");
+        
+            do{
+                opc = Integer.parseInt(JOptionPane.showInputDialog(
+                                       """
+                                       --- CATÁLOGO DE SERVICIOS ---
+                                       Seleccione una opción:
+                                       1. Podología S/70.00
+                                       2. Manicura tradicional S/20.00
+                                       3. Manicura gel S/40.00
+                                       4. Tratamiento de Hongos S/100.00
+                                       5. Pedicura S/50.00
+                                       6. FINALIZAR Y COBRAR
+                                       """
+                ));
 
-        // Mensaje de bienvenida profesional
-        JOptionPane.showMessageDialog(null, "Bienvenido al Sistema de Gestión PodoGlow");
+                if(opc>0 && opc<6){
+                    while(true){
+                        cantServ = Integer.parseInt(JOptionPane.showInputDialog("¿Cuántos servicios realizó"));
 
-        // 2. Ciclo de selección múltiple (Permite elegir varios servicios)
-        do {
-            String menu = "--- CATÁLOGO DE SERVICIOS ---\nSeleccione una opción:\n";
-            for (int i = 0; i < servicios.length; i++) {
-                menu += (i + 1) + ". " + servicios[i] + " (S/ " + precios[i] + ")\n";
-            }
-            menu += (servicios.length + 1) + ". FINALIZAR Y COBRAR";
+                        if(cantServ>0)
+                            break;
 
-            // Captura la opción del menú
-            try {
-                String input = JOptionPane.showInputDialog(menu);
-                if (input == null) break; // Si presiona cancelar, sale del programa
-                
-                opcion = Integer.parseInt(input);
-
-                if (opcion >= 1 && opcion <= servicios.length) {
-                    // 3. Captura de cantidad por servicio
-                    int index = opcion - 1;
-                    int cantidad = Integer.parseInt(JOptionPane.showInputDialog(
-                        "Has seleccionado: " + servicios[index] + "\n¿Cuántos servicios realizó?"
-                    ));
-
-                    if (cantidad > 0) {
-                        double subtotal = precios[index] * cantidad;
-                        totalVenta += subtotal; // Acumulador del total final
-                        JOptionPane.showMessageDialog(null, "Agregado: S/ " + subtotal + "\nTotal acumulado: S/ " + totalVenta);
+                        JOptionPane.showMessageDialog(null, "La cantidad de servicios debe ser mayor a 0");
                     }
-                } else if (opcion != (servicios.length + 1)) {
-                    JOptionPane.showMessageDialog(null, "Opción no válida.");
                 }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Por favor, ingrese solo números.");
+
+                switch(opc){
+                    case 1:
+                        subtotal = POD*cantServ;
+                        ventaTotal += subtotal;
+                        JOptionPane.showMessageDialog(null, "Agregado: S/ " + subtotal +
+                                                            "\nTotal acumulado: S/ " + ventaTotal
+                        );
+                        break;
+
+                    case 2:
+                        subtotal = MANICURAT*cantServ;
+                        ventaTotal += subtotal;
+                        JOptionPane.showMessageDialog(null, "Agregado: S/ " + subtotal +
+                                                            "\nTotal acumulado: S/ " + ventaTotal
+                        );
+                        break;
+
+                    case 3:
+                        subtotal = MANICURAG*cantServ;
+                        ventaTotal += subtotal;
+                        JOptionPane.showMessageDialog(null, "Agregado: S/ " + subtotal +
+                                                            "\nTotal acumulado: S/ " + ventaTotal
+                        );
+                        break;
+
+                    case 4:
+                        subtotal = TRAT*cantServ;
+                        ventaTotal += subtotal;
+                        JOptionPane.showMessageDialog(null, "Agregado: S/ " + subtotal +
+                                                            "\nTotal acumulado: S/ " + ventaTotal
+                        );
+                        break;
+
+                    case 5:
+                        subtotal = PEDI*cantServ;
+                        ventaTotal += subtotal;
+                        JOptionPane.showMessageDialog(null, "Agregado: S/ " + subtotal +
+                                                            "\nTotal acumulado: S/ " + ventaTotal
+                        );
+                        break;
+
+                    case 6:
+                        JOptionPane.showMessageDialog(null, 
+                            "==============================\n" +
+                            "       RESUMEN DE VENTA       \n" +
+                            "==============================\n" +
+                            "TOTAL A PAGAR: S/ " + ventaTotal + "\n" +
+                            "==============================\n" +
+                            "¡Gracias por su visita a PodoGlow!"
+                        );
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Opción no válida");
+                }
+            }while(opc!=6);
+            
+            while (true){
+                pregunta = JOptionPane.showInputDialog("¿Desea ingresar consumo de otro usuario?"+
+                                                   "\nSi"+
+                                                   "\nNo"
+                );
+                if (pregunta.equalsIgnoreCase("Si")|| pregunta.equalsIgnoreCase("No"))
+                    break;
+                
+                JOptionPane.showMessageDialog(null, "Opción no válida: solo puede ingresar (SI o NO)");
             }
-
-        } while (opcion != (servicios.length + 1));
-
-        // 4. Resultado final (Elimina errores manuales y profesionaliza el cobro)
-        JOptionPane.showMessageDialog(null, 
-            "==============================\n" +
-            "       RESUMEN DE VENTA       \n" +
-            "==============================\n" +
-            "TOTAL A PAGAR: S/ " + totalVenta + "\n" +
-            "==============================\n" +
-            "¡Gracias por su visita a PodoGlow!", 
-            "Cierre de Caja", JOptionPane.INFORMATION_MESSAGE);
+            
+        }while(pregunta.equalsIgnoreCase("Si"));
     }
+    
 }
